@@ -60,3 +60,50 @@ fileResult readFile() {
 int input(){
 	
 }
+int Safe() {
+	for (int i = 0; i < result.row; i++) {
+		for (int j = 0; j < result.col; j++) {
+			if (need[i][j] < 0) {
+				printf("Not Safe!");
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+int Banker() {
+	int p[p_num];
+	int result[p_num];
+	int idx = 0;
+	int temp_avail[p_num][r_num];
+	for (int i = 0; i < p_num; i++) {
+		p[i] = 0;
+		for (int j = 0; j < r_num; j++) {
+			temp_avail[i][j] = avaliable[i][j];
+		}
+	}
+
+	for (int k = 0; k < p_num; k++) {
+		for (int i = 0; i < p_num; i++) {
+			if (p[i] == 0) {
+				int flag = 0;
+				for (int j = 0; j < r_num; j++) {
+					if (temp_avail[j] < need[i][j]) {
+						flag = 1;
+						break;
+					}
+				}
+				if (flag == 0) {
+					result[idx++] = i;
+					for (int l = 0; l < r_num; l++) {
+						temp_avail[l] += allocation[i][l];
+					}
+					p[i] = 1;
+				}
+
+			}
+		}
+	}
+	return result;
+}
