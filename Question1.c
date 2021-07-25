@@ -57,9 +57,48 @@ fileResult readFile() {
 	return result;
 }
 
-int input(){
-	
+int input(fileResult *fr) {
+	for (int i = 0; i < p_num; i++) {
+		for (int j = 0; j < r_num; j++) {
+			allocation[i][j] = 0;
+		}
+	}
+	int flag = 1;
+	while (flag) {
+		char string[r_num + 3];
+		char *temp = string;
+		printf("Enter a Command: ");
+		scanf("%s", temp);
+		if (*temp == '*') {
+			flag = 0;
+			Print();
+		} else if ((*(temp + 2) - 48) >= fr->row) {
+			printf("Out of bounds!\n");
+			return 1;
+
+		} else if (*(temp + 1) == 'Q') {
+			int row = *(temp + 2) - 48;
+			for (int i = 0; i < result.col; i++) {
+				allocation[row][i] += *(temp + i + 3) - 48;
+				need[row][i] = maximum[row][i] - allocation[row][i];
+			}
+
+			printf("Request Completed!\n");
+
+		} else if (*(temp + 1) == 'L') {
+			int row = *(temp + 2) - 48;
+			for (int i = 3; i < result.col + 3; i++) {
+				allocation[row][i - 3] -= *(temp + i) - 48;
+				need[row][i] = maximum[row][i] - allocation[row][i];
+			}
+			printf("Request Completed!\n");
+		}
+
+	}
+	return 0;
 }
+
+
 int Safe() {
 	for (int i = 0; i < result.row; i++) {
 		for (int j = 0; j < result.col; j++) {
