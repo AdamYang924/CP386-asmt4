@@ -2,7 +2,7 @@
 ## Motivation
 - To practice the Banker's algorithm to avoid deadlock with multiple type of resources
 ## Installation
-- Eclipse to write code and test the program in Linux visual machine
+- Eclipse to write code and test the program in Linux virtual machine
 ## Screen shots
 ## Individual contribution
 ## Features
