@@ -14,7 +14,6 @@
 - To indicate the resources avaliable resources after the execution of all exist request.
 ## Test
 ## Code example
-(''')
 
 	void Banker() {
 		int p[result.row];
@@ -51,9 +50,12 @@
 		}
 		return;
 	}
-(''')
+
 ## Authors
 - Yongtai Yang
 - Ning Nan
 ## Credits
+- Operating System Concepts”, 10th Edition; Abraham Silberschatz, Peter B.  Galvin,Greg Gagne; 2018; John Wiley and Sons.
+- Dr. Sukhjit Singh Sehra's lecture and his wonderful lecture slide
 ## Licence
+- MIT Licence
