@@ -61,43 +61,43 @@
 	-->  Customer 1 :
 		 Allocated Resources: 2 0 0 
 		 Needed Resources: 1 2 2 
-		 Availible Resources: 3 3 2 
-		 New Thread with ID 1 is started.
-		 Thread with ID 1 is finished.
+		 Available Resources: 3 3 2 
+		 Thread has started
+		 Thread has finished
 		 Thread is releasing resources...
-		 New Availible Resources: 5 3 2 
+		 New Available: 5 3 2 
 	-->  Customer 3 :
 		 Allocated Resources: 2 1 1 
 		 Needed Resources: 0 1 1 
-		 Availible Resources: 5 3 2 
-		 New Thread with ID 3 is started.
-		 Thread with ID 3 is finished.
+		 Available Resources: 5 3 2 
+		 Thread has started
+		 Thread has finished
 		 Thread is releasing resources...
-		 New Availible Resources: 7 4 3 
+		 New Available: 7 4 3 
 	-->  Customer 4 :
 		 Allocated Resources: 0 0 2 
 		 Needed Resources: 4 3 1 
-		 Availible Resources: 7 4 3 
-		 New Thread with ID 4 is started.
-		 Thread with ID 4 is finished.
+		 Available Resources: 7 4 3 
+		 Thread has started
+		 Thread has finished
 		 Thread is releasing resources...
-		 New Availible Resources: 7 4 5 
+		 New Available: 7 4 5 
 	-->  Customer 0 :
 		 Allocated Resources: 0 1 0 
 		 Needed Resources: 7 4 3 
-		 Availible Resources: 7 4 5 
-		 New Thread with ID 0 is started.
-		 Thread with ID 0 is finished.
+		 Available Resources: 7 4 5 
+		 Thread has started
+		 Thread has finished
 		 Thread is releasing resources...
-		 New Availible Resources: 7 5 5 
+		 New Available: 7 5 5 
 	-->  Customer 2 :
 		 Allocated Resources: 3 0 2 
 		 Needed Resources: 6 0 0 
-		 Availible Resources: 7 5 5 
-		 New Thread with ID 2 is started.
-		 Thread with ID 2 is finished.
+		 Available Resources: 7 5 5 
+		 Thread has started
+		 Thread has finished
 		 Thread is releasing resources...
-		 New Availible Resources: 10 5 7 
+		 New Available: 10 5 7 
 ## Code example
 
 	void Banker() {
