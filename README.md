@@ -14,41 +14,44 @@
 - To indicate the resources avaliable resources after the execution of all exist request.
 ## Test
 ## Code example
-'void Banker() {
-	int p[result.row];
+(''')
 
-	int idx = 0;
-	int temp_avail[result.col];
-	for (int i = 0; i < result.row; i++) {
-		p[i] = 0;
-	}
-	for (int j = 0; j < result.col; j++) {
-		temp_avail[j] = avaliable[j];
-	}
-
-	for (int k = 0; k < result.row; k++) {
+	void Banker() {
+		int p[result.row];
+		
+		int idx = 0;
+		int temp_avail[result.col];
 		for (int i = 0; i < result.row; i++) {
-			if (p[i] == 0) {
-				int flag = 0;
-				for (int j = 0; j < result.col; j++) {
-					if (temp_avail[j] < need[i][j]) {
-						flag = 1;
-						break;
-					}
-				}
-				if (flag == 0) {
-					bk_res[idx++] = i;
-					for (int l = 0; l < result.col; l++) {
-						temp_avail[l] += allocation[i][l];
-					}
-					p[i] = 1;
-				}
+			p[i] = 0;
+		}
+		for (int j = 0; j < result.col; j++) {
+			temp_avail[j] = avaliable[j];
+		}
 
+		for (int k = 0; k < result.row; k++) {
+			for (int i = 0; i < result.row; i++) {
+				if (p[i] == 0) {
+					int flag = 0;
+					for (int j = 0; j < result.col; j++) {
+						if (temp_avail[j] < need[i][j]) {
+							flag = 1;
+							break;
+						}
+					}
+					if (flag == 0) {
+						bk_res[idx++] = i;
+						for (int l = 0; l < result.col; l++) {
+							temp_avail[l] += allocation[i][l];
+						}
+						p[i] = 1;
+					}
+
+				}
 			}
 		}
+		return;
 	}
-	return;
-}'
+(''')
 ## Authors
 - Yongtai Yang
 - Ning Nan
