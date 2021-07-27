@@ -15,6 +15,7 @@
 ## Test
 ## Code example
 ('''
+
 void Banker() {
 	int p[result.row];
 
@@ -50,6 +51,7 @@ void Banker() {
 	}
 	return;
 }
+
 ''')
 ## Authors
 - Yongtai Yang
