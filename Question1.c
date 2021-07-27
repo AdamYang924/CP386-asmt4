@@ -29,12 +29,67 @@ typedef struct result {
 	int col;
 } fileResult;
 
+
+int main(int argc, char *argv[]) {
+	int counter;
+	if (argc < 3) {
+
+		printf("ERROR: wrong input format\n");
+		return -1;
+	} else {
+
+		for (counter = 0; counter < argc - 1; counter++)
+			avaliable[counter] = atoi(argv[counter + 1]);
+	}
+
+	if (pthread_mutex_init(&lock, NULL) != 0) {
+
+		printf("\n ERROR: Mutex Init\n");
+		return 1;
+	}
+
+	readFile();
+	printf("The number of customers is: %d \n", result.row);
+
+	printf("Currently Available resources:\n");
+	for (int j = 0; j < result.col; j++) {
+		printf("%d ", avaliable[j]);
+	}
+	printf("\n");
+	printf("Maximum resources from file:\n");
+	for (int i = 0; i < result.row; i++) {
+		for (int j = 0; j < result.col; j++) {
+			printf("%d ", maximum[i][j]);
+		}
+		printf("\n");
+	}
+
+	input();
+
+	return 0;
+}
+
+
+/*
 int input();
 fileResult readFile();
 int Safe();
 int Banker();
 void* Runner(void *t);
 void Print();
+*/
+
+int input();
+void readFile();
+int Safe();
+void Banker();
+void* Runner(void *t);
+void Print();
+void logStart(int tID);
+void logFinish(int tID);
+fileResult result = { 0, 0 };
+int bk_res[p_num];
+
 
 fileResult readFile() {
 	fileResult result = { 0, 0 };
@@ -146,3 +201,83 @@ int Banker() {
 	}
 	return result;
 }
+
+
+
+void logStart(int tID) {
+	printf("\t Thread has started\n");
+}
+
+void logFinish(int tID) {
+	printf("\t Thread has finished\n");
+}
+void* Runner(void *t) {
+	pthread_mutex_lock(&lock);
+
+	int id = ((Thread*) t)->tid;
+	printf("-->  Customer %d :\n", id);
+	printf("\t Allocated Resources: ");
+	for (int i = 0; i < result.col; i++) {
+		printf("%d ", allocation[id][i]);
+	}
+	printf("\n");
+
+	printf("\t Needed Resources: ");
+	for (int i = 0; i < result.col; i++) {
+		printf("%d ", need[id][i]);
+	}
+	printf("\n");
+
+	printf("\t Available Resources: ");
+	for (int i = 0; i < result.col; i++) {
+		printf("%d ", avaliable[i]);
+	}
+	printf("\n");
+	logStart(((Thread*) t)->tid);
+	logFinish(((Thread*) t)->tid);
+
+	printf("\t Thread is releasing resources...\n");
+
+	for (int i = 0; i < result.col; i++) {
+		avaliable[i] += allocation[id][i];
+	}
+	printf("\t New Available: ");
+	for (int i = 0; i < result.col; i++) {
+		printf("%d ", avaliable[i]);
+	}
+	printf("\n");
+
+	pthread_mutex_unlock(&lock);
+	pthread_exit(0);
+}
+
+void Print() {
+	printf("Available:\n");
+	for (int j = 0; j < result.col; j++) {
+		printf("%d ", avaliable[j]);
+	}
+	printf("\n");
+
+	printf("Allocated:\n");
+	for (int i = 0; i < result.row; i++) {
+		for (int j = 0; j < result.col; j++) {
+			printf("%d ", allocation[i][j]);
+		}
+		printf("\n");
+	}
+	printf("Maximum:\n");
+	for (int i = 0; i < result.row; i++) {
+		for (int j = 0; j < result.col; j++) {
+			printf("%d ", maximum[i][j]);
+		}
+		printf("\n");
+	}
+	printf("Need:\n");
+	for (int i = 0; i < result.row; i++) {
+		for (int j = 0; j < result.col; j++) {
+			printf("%d ", need[i][j]);
+		}
+		printf("\n");
+	}
+}
+
