@@ -14,8 +14,7 @@
 - To indicate the resources avaliable resources after the execution of all exist request.
 ## Test
 ## Code example
-'''
-void Banker() {
+'void Banker() {
 	int p[result.row];
 
 	int idx = 0;
@@ -49,9 +48,7 @@ void Banker() {
 		}
 	}
 	return;
-}
-
-'''
+}'
 ## Authors
 - Yongtai Yang
 - Ning Nan
