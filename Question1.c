@@ -12,7 +12,7 @@
 #define r_num 20
 int maximum[p_num][r_num];
 int avaliable[r_num];
-int allocated[p_num][r_num];
+int allocation[p_num][r_num];
 int need[p_num][r_num];
 
 pthread_mutex_t lock;
@@ -29,6 +29,16 @@ typedef struct result {
 	int col;
 } fileResult;
 
+int input();
+void readFile();
+int Safe();
+void Banker();
+void* Runner(void *t);
+void Print();
+void logStart(int tID);
+void logFinish(int tID);
+fileResult result = { 0, 0 };
+int bk_res[p_num];
 
 int main(int argc, char *argv[]) {
 	int counter;
@@ -69,76 +79,96 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+void readFile() {
 
-/*
-int input();
-fileResult readFile();
-int Safe();
-int Banker();
-void* Runner(void *t);
-void Print();
-*/
-
-int input();
-void readFile();
-int Safe();
-void Banker();
-void* Runner(void *t);
-void Print();
-void logStart(int tID);
-void logFinish(int tID);
-fileResult result = { 0, 0 };
-int bk_res[p_num];
-
-
-fileResult readFile() {
-	fileResult result = { 0, 0 };
 	FILE *file;
 	char temp;
+
+	int counter = 0;
+
 	file = fopen("sample4_in.txt", "r");
 	if (file) {
 		while ((temp = getc(file)) != EOF) {
-			if (temp == ',' && result.row == 0) {
-				result.col++;
+			if (temp == ',') {
+				if (result.row == 0) {
+					result.col++;
+				}
+				counter++;
 			} else if (temp == '\n') {
 				result.row++;
-				result.col = 0;
+				counter = 0;
 			} else if (temp >= '0' && temp <= '9') {
-				maximum[result.row][result.col] = temp - '0';
+				maximum[result.row][counter] = temp - '0';
 			}
 		}
+		result.col++;
+		result.row++;
 	}
+
 	fclose(file);
-	return result;
+	return;
 }
 
-int input(fileResult *fr) {
+int input() {
 	for (int i = 0; i < p_num; i++) {
 		for (int j = 0; j < r_num; j++) {
 			allocation[i][j] = 0;
 		}
 	}
 	int flag = 1;
+	int safe;
 	while (flag) {
 		char string[r_num + 3];
 		char *temp = string;
-		printf("Enter a Command: ");
+		printf("Enter Command: ");
 		scanf("%s", temp);
-		if (*temp == '*') {
-			flag = 0;
+		if (*temp == 'S') {
 			Print();
-		} else if ((*(temp + 2) - 48) >= fr->row) {
-			printf("Out of bounds!\n");
+		} else if (*(temp + 1) == 'u') {
+			Banker();
+			printf("\nSafe Sequence is: <");
+
+			for (int i = 0; i < result.row; i++) {
+				printf("%d ", bk_res[i]);
+			}
+			printf(">\nNow going to executing the threads: \n");
+			for (int i = 0; i < result.row; i++) {
+				Thread *t = NULL;
+				t = (Thread*) malloc(sizeof(Thread));
+				t->tid = bk_res[i];
+				t->state = 1;
+				t->retVal = pthread_create(&(t->handle), NULL, Runner, t);
+				sleep(1);
+			}
+			flag = 0;
+		} else if ((*(temp + 2) - 48) >= result.row) {
+			printf("ERROR: Overflow\n");
 			return 1;
 
 		} else if (*(temp + 1) == 'Q') {
 			int row = *(temp + 2) - 48;
+			int pre_allocation[p_num][r_num];
+			int pre_need[p_num][r_num];
+
 			for (int i = 0; i < result.col; i++) {
+				pre_allocation[row][i] = allocation[row][i];
+				pre_need[row][i] = need[row][i];
 				allocation[row][i] += *(temp + i + 3) - 48;
 				need[row][i] = maximum[row][i] - allocation[row][i];
 			}
-
-			printf("Request Completed!\n");
+			safe = Safe();
+			if (safe == 1) {
+				printf("Request denied\n");
+				for (int i = 0; i < result.col; i++) {
+					allocation[row][i] = pre_allocation[row][i];
+					need[row][i] = pre_need[row][i];
+				}
+			} else {
+				for (int i = 0; i < result.col; i++) {
+					avaliable[i] -= allocation[row][i];
+				}
+				printf("Request Completed!\n");
+			}
 
 		} else if (*(temp + 1) == 'L') {
 			int row = *(temp + 2) - 48;
@@ -153,10 +183,9 @@ int input(fileResult *fr) {
 	return 0;
 }
 
-
-int Safe() {
-	for (int i = 0; i < result.row; i++) {
-		for (int j = 0; j < result.col; j++) {
+int Safe(fileResult *fr) {
+	for (int i = 0; i < fr->row; i++) {
+		for (int j = 0; j < fr->col; j++) {
 			if (need[i][j] < 0) {
 				printf("Not Safe!");
 				return 1;
@@ -166,31 +195,31 @@ int Safe() {
 	return 0;
 }
 
-int Banker() {
-	int p[p_num];
-	int result[p_num];
+void Banker() {
+	int p[result.row];
+
 	int idx = 0;
-	int temp_avail[p_num][r_num];
-	for (int i = 0; i < p_num; i++) {
+	int temp_avail[result.col];
+	for (int i = 0; i < result.row; i++) {
 		p[i] = 0;
-		for (int j = 0; j < r_num; j++) {
-			temp_avail[i][j] = avaliable[i][j];
-		}
+	}
+	for (int j = 0; j < result.col; j++) {
+		temp_avail[j] = avaliable[j];
 	}
 
-	for (int k = 0; k < p_num; k++) {
-		for (int i = 0; i < p_num; i++) {
+	for (int k = 0; k < result.row; k++) {
+		for (int i = 0; i < result.row; i++) {
 			if (p[i] == 0) {
 				int flag = 0;
-				for (int j = 0; j < r_num; j++) {
+				for (int j = 0; j < result.col; j++) {
 					if (temp_avail[j] < need[i][j]) {
 						flag = 1;
 						break;
 					}
 				}
 				if (flag == 0) {
-					result[idx++] = i;
-					for (int l = 0; l < r_num; l++) {
+					bk_res[idx++] = i;
+					for (int l = 0; l < result.col; l++) {
 						temp_avail[l] += allocation[i][l];
 					}
 					p[i] = 1;
@@ -199,11 +228,8 @@ int Banker() {
 			}
 		}
 	}
-	return result;
+	return;
 }
-
-
-
 void logStart(int tID) {
 	printf("\t Thread has started\n");
 }
