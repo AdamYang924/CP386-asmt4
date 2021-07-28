@@ -4,7 +4,8 @@
 ## Installation
 - Eclipse to write code and test the program in Linux virtual machine
 ## Screen shots
-<img width="438" alt="Screen Shot 2021-07-27 at 7 45 18 PM" src="https://user-images.githubusercontent.com/87817568/127242744-542cc851-818e-4380-b428-0f25f3ffcc04.png">
+![WechatIMG417](https://user-images.githubusercontent.com/87817568/127261475-b4b6b081-d5e0-49f9-be70-6337d0d24c0c.jpeg)
+
 
 ## Individual contribution
 - Ning Nan is responsible for writting the module that read input from user, build the runner that runs in mutex.
