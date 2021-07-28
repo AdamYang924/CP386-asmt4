@@ -14,7 +14,10 @@
 - To determine if the given request is in the safe state
 - To avoid deadlock
 - To indicate the resources avaliable resources after the execution of all exist request.
-## Test
+
+## Features
+
+## Test cases
 	yangyongtai@yangyongtaideMacBook-Pro src % ./Q1 3 3 2           
 	The number of customers is: 5 
 	Currently Available resources:
@@ -138,7 +141,7 @@
 		return;
 	}
 
-## Authors
+## About Developers
 - Yongtai Yang
 - Ning Nan
 ## Credits
