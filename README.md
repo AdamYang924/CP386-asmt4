@@ -16,91 +16,91 @@
 - To indicate the resources avaliable resources after the execution of all exist request.
 
 ## Test cases
-	yangyongtai@yangyongtaideMacBook-Pro src % ./Q1 3 3 2           
+	yangyongtai@yangyongtaideMacBook-Pro src % ./Question1 10 5 7 8        
 	The number of customers is: 5 
 	Currently Available resources:
-	3 3 2 
+	10 5 7 8 
 	Maximum resources from file:
-	7 5 3 
-	3 2 2 
-	9 0 2 
-	2 2 2 
-	4 3 3 
-	Enter Command: RQ0010
+	6 4 7 3 
+	4 2 3 2 
+	2 5 3 3 
+	6 3 3 2 
+	5 5 7 5 
+	Enter Command: RQ01001
 	Request Completed!
-	Enter Command: RQ1200
+	Enter Command: RQ11111
 	Request Completed!
-	Enter Command: RQ2302
+	Enter Command: RQ22222
 	Request Completed!
-	Enter Command: RQ3211
+	Enter Command: RQ31111
 	Request Completed!
-	Enter Command: RQ4002
+	Enter Command: RQ41000
 	Request Completed!
-	Enter Command: *
+	Enter Command: Status
 	Available:
-	3 3 2 
+	4 1 3 3 
 	Allocated:
-	0 1 0 
-	2 0 0 
-	3 0 2 
-	2 1 1 
-	0 0 2 
+	1 0 0 1 
+	1 1 1 1 
+	2 2 2 2 
+	1 1 1 1 
+	1 0 0 0 
 	Maximum:
-	7 5 3 
-	3 2 2 
-	9 0 2 
-	2 2 2 
-	4 3 3 
+	6 4 7 3 
+	4 2 3 2 
+	2 5 3 3 
+	6 3 3 2 
+	5 5 7 5 
 	Need:
-	7 4 3 
-	1 2 2 
-	6 0 0 
-	0 1 1 
-	4 3 1 
+	5 4 7 2 
+	3 1 2 1 
+	0 3 1 1 
+	5 2 2 1 
+	4 5 7 5 
 	Enter Command: Run
 
-	Safe Sequence is: <1 3 4 0 2 >
+	Safe Sequence is: <1 3 2 4 0 >
 	Now going to executing the threads: 
 	-->  Customer 1 :
-		 Allocated Resources: 2 0 0 
-		 Needed Resources: 1 2 2 
-		 Available Resources: 3 3 2 
+		 Allocated Resources: 1 1 1 1 
+		 Needed Resources: 3 1 2 1 
+		 Available Resources: 4 1 3 3 
 		 Thread has started
 		 Thread has finished
 		 Thread is releasing resources...
-		 New Available: 5 3 2 
+		 New Available: 5 2 4 4 
 	-->  Customer 3 :
-		 Allocated Resources: 2 1 1 
-		 Needed Resources: 0 1 1 
-		 Available Resources: 5 3 2 
+		 Allocated Resources: 1 1 1 1 
+		 Needed Resources: 5 2 2 1 
+		 Available Resources: 5 2 4 4 
 		 Thread has started
 		 Thread has finished
 		 Thread is releasing resources...
-		 New Available: 7 4 3 
-	-->  Customer 4 :
-		 Allocated Resources: 0 0 2 
-		 Needed Resources: 4 3 1 
-		 Available Resources: 7 4 3 
-		 Thread has started
-		 Thread has finished
-		 Thread is releasing resources...
-		 New Available: 7 4 5 
-	-->  Customer 0 :
-		 Allocated Resources: 0 1 0 
-		 Needed Resources: 7 4 3 
-		 Available Resources: 7 4 5 
-		 Thread has started
-		 Thread has finished
-		 Thread is releasing resources...
-		 New Available: 7 5 5 
+		 New Available: 6 3 5 5 
 	-->  Customer 2 :
-		 Allocated Resources: 3 0 2 
-		 Needed Resources: 6 0 0 
-		 Available Resources: 7 5 5 
+		 Allocated Resources: 2 2 2 2 
+		 Needed Resources: 0 3 1 1 
+		 Available Resources: 6 3 5 5 
 		 Thread has started
 		 Thread has finished
 		 Thread is releasing resources...
-		 New Available: 10 5 7 
+		 New Available: 8 5 7 7 
+	-->  Customer 4 :
+		 Allocated Resources: 1 0 0 0 
+		 Needed Resources: 4 5 7 5 
+		 Available Resources: 8 5 7 7 
+		 Thread has started
+		 Thread has finished
+		 Thread is releasing resources...
+		 New Available: 9 5 7 7 
+	-->  Customer 0 :
+		 Allocated Resources: 1 0 0 1 
+		 Needed Resources: 5 4 7 2 
+		 Available Resources: 9 5 7 7 
+		 Thread has started
+		 Thread has finished
+		 Thread is releasing resources...
+		 New Available: 10 5 7 8 
 ## Code example
 
 	void Banker() {
