@@ -15,8 +15,6 @@
 - To avoid deadlock
 - To indicate the resources avaliable resources after the execution of all exist request.
 
-## Features
-
 ## Test cases
 	yangyongtai@yangyongtaideMacBook-Pro src % ./Q1 3 3 2           
 	The number of customers is: 5 
