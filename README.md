@@ -1,6 +1,7 @@
 # CP386-assignment 4
 ## Motivation
-- To practice the Banker's algorithm to avoid deadlock with multiple type of resources
+- Write a multi-threaded program to practice the Banker's algorithm to avoid deadlock with multiple type of resources
+- Customer requests, bank releases the resources and banker will keep track of them. 
 ## Installation
 - Eclipse to write code and test the program in Linux virtual machine
 ## Screen shots
